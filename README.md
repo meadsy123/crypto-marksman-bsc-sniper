@@ -8,33 +8,42 @@ If you have any questions or inquiries, you can contact me via telegram: <b>mead
 - A Hot wallet address (not attached to closed exchange) and private key. Metamask is the best option as trust wallet doesn't provide private key.
 - A Windows machine x64
 
+<H2>How to create an account on Metamask</H2>
+
+You will need to setup your wallet and connect to the binance smart chain... Follow this guide for metamask.
+
+https://medium.com/stakingbits/setting-up-metamask-for-binance-smart-chain-bsc-921d9a2625fd
+
 <br> </br>
 <H2>Getting started</H2>
 
 0. Read prerequisites
 
-1. Download the latest release or download "configfile.py", "tokens.json", "crypto_marksman.exe" from the repository.
+1. Download the source code from the latest release.
 
 
-2. Open "configfile.py" (with notepad for instance) and add your ethereum address and personal key at the bottom of the file between the quotation marks('').
+2. Open "configfile.py" (with notepad for instance) and add your bsc wallet address and private key at the bottom of the file between the quotation marks('').
 
 <pre>...
 my_address = ''
 my_pk = ''
 </pre>
 
+<H2>How to create a test account on Metamask</H2>
 
-3. Run "crypto_marksman.exe"
+To test the application, you will need to setup your wallet and connect to the binance smart chain testnet... Follow this guide for metamask.
+
+https://medium.com/spartanprotocol/how-to-connect-metamask-to-bsc-testnet-7d89c111ab2
+
+3. Run "main.exe"
 
 - Make sure the three files are in the same folder otherwise this program will not run.
-
 
 5. Edit settings according to choice.
 
 
 <br> </br>
 <H2>Functions</H2>
-
 
 <b>Get Total Wallet Balance</b>: A list of tokens that are listed in the tokens.json are used to retrieve the token balance from your wallet and the token price to calculate your total price from pancakswap. 
 
@@ -45,13 +54,20 @@ my_pk = ''
 
 <H2>Fields</H2>
 
+<b>Selected Token</b>: The dropdwon will be populated from the tokens list set in tokens.json, once selected the token fields will be automatically populated.
 
-<b>How fast liquidity checking</b>
-The amount of time the bot has to wait per liquidity check. If this is set at 0ms, its fine.
+The first swap pair token will have to be WBNB, so you will need to make sure the token you are buying has a pair contract with WBNB. for example WBNB/SAFEMOON. This basically means that you are able to swap the selected token for BNB.
 
-<b>Only buy if price is less than (limit buy)</b>
-This so you wont buy a token for too much $. Especially handy for failing buy orders due to too less
-slappage or GWEI and for scam launches/IDO’s which add a token for too much $.
+<b>Trade Action</b>: There are 3 trade actions you need to be aware of
+1. BUY - a buy transaction will be created, using the token selected. The trade will consist of trading BNB for the selected token.
+2. SELL - a sell transaction will be created, the trade consist of the selected token for BNB.
+3. BUY/SELL - A buy transaction will be created, then the fields/settings will depend on what instance a sell transaction will be created.
+
+<b>BNB to trade</b>: How many BNB do you wish to use for the transaction.
+
+<b>Token start price</b>: The price used to get the price percentage increase in the price thread which populates the prices/balances at the bottom of the program.
+
+<b>Token to buy</b>: Instead of using the "BNB to trade" which will get as many tokens as possible, this field will use the exact output and calculate the amount of BNB that will be used in the trade at that given time
 
 <b>Max overall slippage</b>
 The max slippage you want the bot to handle. Can be set from 1 to 100%. 100%= the bot only will
@@ -59,88 +75,98 @@ accept a trade if the minimal amount of tokens it gets is 0 (=always accepting).
 Slippage is the expected % difference between these quoted and executed prices. Low liquidity can
 also cause increased slippage, which is why larger orders tend to face higher slippage.
 
-<b>GWEI to use for trade</b>
-The amount of GWEI you want to use for a trade. Remember to keep this 10-15 (when bsc is not the
-usual 5 GWEI) for testing. But for sniping much higher. How much higher depends on the token (how
-much people are going to snipe), your latency with the RPC and if you really want to compete with
-the fastest guys, or just don’t want to make a proft. The fastest snipes use the highest GWEI and are
-only worth it when you play with a lot of BNB.
-https://bscscan.com/tx/0xc13c8150dc5eb37fde31cc9d155349af57a2b0973e35f0cd82942c6459b29
-bd6
-
-
-<b>Sell when price is higher than (Limit sell)</b>
-Limit sell option. If the current price of the token is higher than the amount set here, the bot will
-buy.
-
-<b>Sell when token is this much higher than start (= Sell when you have this much profit ,if
-you would sell)</b>
-The amount of profit you want to have, and want to sell for. This is not the profit that you are going
-to make, there is still slippage.
-
-<b>Custom slippage for selling</b>
-The slippage you want the bot to handle specially for selling. Can be set from 1 to 100%. 100%= the
-bot only will accept a trade if the minimal amount of BNB it gets is 0 (=always accepting). If you don’t
-check it, it will use the overall slippage.
-Slippage is the expected % difference between these quoted and executed prices. Low liquidity can
-also cause increased slippage, which is why larger orders tend to face higher slippage.
-
 <b>Gas limit</b>
-Please set this at 700000, so an order will never fail because you didn’t accept a higher gas.
+Please set this at 500000, so an order will never fail because you didn’t accept a higher gas.
 
-<b>Sell this many times</b>
-Perform a sell in multiple orders. In the future this will get more advanced, with different profits you
-accept as sniper per number of order in a sequency.
+<b>GWEI fee to use for trade</b>
+This field is the amount of GWEI (fee) you want to use for a trade. For sniping you want to keep this much higher than normal trading, so the block is mined as fast as possible. I recommend using more than 20 when sniping maybe even more. (normal trading is done at 5 GWEI). How much higher depends on the token (how
+much people are going to snipe), your latency with the RPC and if you really want to compete with
+the fastest guys, or just don’t want to make a profit. The fastest snipes use the highest GWEI and are
+only worth it when you play with a lot of BNB.
 
-<b>Only sell token, don’t buy</b>
-Will ignore settings that have to do with buy, and will only sell token
-
-
-<b>Token address</b>: Fill the token address of the token you want to trade (such as 0x0000000000000000000000000000000000000000)
-
-<b>Token name</b>: The name of the token, fill it in yourself
-
-<b>Dec.</b>: The amount of decimals the token operates with (18 is normal)
-
-<b>Sell(£)</b>: The price you want the trader to sell the token for (0.01 = 1 dollar cent)
-
-<b>Buy(£)</b>: The price you want the trader to buy the token for (0.01 = 1 dollar cent)
+<H3>Buy</H3>
 
 <b>Different deposit address</b>: Use this if you want the swap output to go to a different wallet address. There is a toggle for true/false and a field in config.py for the different address.
 
-<br> </br>
+<b>Liquidity Check</b>: If the liquidty check toggle is set to true, a concurrent thread is created to continuosly check the liquidity. Firstly, the bot will check if the selected  pair contract is avaiable on the exchange factory contract for example (WBNB/SAFEMOON), if true the loop will start checking if the liquidity is available on the exchange router. Once liquidity is available the trade function is called as fast as possible. If the liquity check toggle is set to false, the trade function will start straight away. <b> This is not available on the demo due to testnet Pancakeswap factory contract not working.</b>
+
+<b>Liquidity Speed</b>: The amount of time the bot has to wait per liquidity check. If this is set at 0ms, its fine.
+
+<b>Only buy if price is less than </b>
+This so you wont buy a token for too much $. Especially handy for failing buy orders due to too less
+slippage or GWEI and for scam launches/IDO’s which add a token for too much $.
+
+<H3>Sell</H3>
+
+<b>Custom Slippage for selling</b>
+The max slippage you want the bot to use when selling. Can be set from 1 to 100%. 100%= the bot only will
+accept a trade if the minimal amount of tokens it gets is 0 (=always accepting).
+Slippage is the expected % difference between these quoted and executed prices. Low liquidity can
+also cause increased slippage, which is why larger orders tend to face higher slippage.
+
+<b>Amount of seconds to wait until sell</b>
+This field is used for the time between the buy transaction and the sell transaction.
+
+<b>Sell when token price is more than</b>
+The price will be checked continously until this price is greater than the buy price. At that point a sell transaction will ber created. slippage and fees will still apply.
+
+<b>Sell when token price is % higher than buy</b>
+The price will be checked continously until this price is greater the specified percentage higher than the buy price. At that point a sell transaction will be creates. slippage and fees will still apply.
+
+<H2>Buttons</H2>
+
+<b>Wallet Balance</b>: A list of tokens that are listed in the tokens.json are used to retrieve the token balance from your wallet and the token price to calculate your total price from pancakswap. 
+
+<b>Start</b>: A thread is created which the sniping bot will run on. please be aware every click will create a new thread and therefore a new transaction.
+
+<b>Stop</b>: Stops all concurrent threads, includes buy/sell transaction threads or price/balance thread.
+
+<b>Check Latency</b>: The time taken for you to receive a response from the blockchain.
+
+<H2>Logging and Reports</H2>
+
+There is more extensive reporting/logging in the if you turn debug mode on, either using the GUI or by setting debugmode='1' in the configfile.py.
+
+The logging is added to logs/console.log in the directory of the release.
+
+All transactions data is added to the json/transactions.json file
+
+![image](https://user-images.githubusercontent.com/16119958/131032421-ad2e3071-4deb-4086-ad57-60b2953ee25f.png)
+
+Once you have the tx you can search your transactions up on 'https://bscscan.com/tx/ADD_YOUR_TX_HASH_HERE'
+
+
+<H2>Common Errors</h2>
+
+- Transaction is not in sync with the chain. This is due to either a processing transaction using the same nonce as the current transaction or your nonces are out of sync. simple solution send your 0 using a custom nonce (get the last nonce from tx list and add 1). this should reset your nonce.
+- "Returned error: replacement transaction underpriced" 
+  1. You have a pending transaction from your account
+  2. The new transaction you are sending has the same nonce as that pending transaction
+  3. The new transaction you sent has a gas price that is too small to replace the pending transaction
+  
+- 'transaction underpriced' Or your GWEI is too low or your max gas is too low.For max gas 700k (700000) is advisable, this way a transaction will never fail because of gas.
+
+-'insufficient funds for gas * price + value', You didn’t have enough bnb on your account for the trade. transaction fee in bnb= (gwei* gas)* 0.000000001
+- 'already known', This is the error you get when the bot was trying to approve a token, but that token was already approved in the end. 
+- SSL errors. This is a problem is possibility that your vpn, anti-virus or firewall is blocking the bot.
+
+
+<H2>BSC Errors</h2>
+- Fail with error TransferHelper: ‘TRANSFER_FROM_FAILED’ ‘max gas' was too low. Please set the max-gas at 700k to be sure it never fails because of that.
 
 <br> </br>
-<H2>Current bugs</h2>
+<H2>To do list</H2>
 
-- Some tokens or trading amounts are not possible to trade with, due to this issue: https://github.com/ethereum/web3.py/issues/1634
-  This is the error-message you get: "Python int too large to convert to C ssize_".
-  If you get this error its best to exclude the token (which probably has a very low price per token) or trade with lower amounts.
-- Sloppy dinamic design of GUI
-- Sometimes lag when updating names or when starting the bot (0-10 seconds)
-- More: Let me know!
-
-<br> </br>
-<H2>To do</H2>
-
-- Let the amount of decimals and the token-name be derived automatically (like in the uniswap-bot)
-- Add pcs v1 support
-- New, more user-friendly design
-- Fix "Python int too large to convert to C ssize_"
-
-(Depends on whether the application is used)
+- Add multiple exchanges to choose from.
+- create multiple bots for all blockchains. eth, matic, solana etc
 
 <br> </br>
 <H2>Author</H2>
 
-If you have any questions you can contact me via telegram: meadsy92
+If you have any questions you can contact me via telegram: @meadzy
 <br> </br>
-Donations: 0xEE2FB21ecf35bc3f061b780Ebb3bf0299337EFc0
-
+Donations: 0x4B4fB57652F1B87db1dC88e1E2Fbb85c85a60895
 
 <br> </br>
 <H2>Disclosure</H2>
 Use the application at your own risk, I am not in any way responsible for losses.
-
-  
-
