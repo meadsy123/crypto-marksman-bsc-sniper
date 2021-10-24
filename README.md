@@ -1,7 +1,7 @@
-# Crypto Marksman - Pancakeswap V2 BSC
+# Crypto Marksman BSC Sniper - Pancakeswap V2
 A Pancakeswap V2 listing sniper bot on the bincance smart chain, includes a simple GUI and much more.
 
-If you have any questions or inquiries, you can contact me via telegram: <b>meadsy</b>
+If you have any questions or inquiries, you can contact me via telegram: <b>@meadzy</b>
 
 <H2>Prerequisites</H2>
 
@@ -29,34 +29,28 @@ my_address = ''
 my_pk = ''
 </pre>
 
-<H2>How to create a test account on Metamask</H2>
-
-To test the application, you will need to setup your wallet and connect to the binance smart chain testnet... Follow this guide for metamask.
-
-https://medium.com/spartanprotocol/how-to-connect-metamask-to-bsc-testnet-7d89c111ab2
-
 3. Run "main.exe"
 
 - Make sure the three files are in the same folder otherwise this program will not run.
 
-5. Edit settings according to choice.
-
+4. Edit settings accordingly using the user interface or configfile.
 
 <br> </br>
 <H2>Functions</H2>
 
 <b>Get Total Wallet Balance</b>: A list of tokens that are listed in the tokens.json are used to retrieve the token balance from your wallet and the token price to calculate your total price from pancakswap. 
 
-<b>Get Token Balance</b>: The balanace/price is retrieved from the token that is either selected from the token dropdown in the GUI or is specificed in the configfile.py.
+<b>Check Latency</b>: This function will ping the blockchain and provide the latency in ms. The less time it takes to talk to the blockchain the quicker you can complete transaction and possibly be able to get a better entry price point.
 
-<b>Snipe</b>: If the liquidty check toggle is set to true, a concurrent thread is created...Firstly, the bot will check if the selected pair contract is avaiable on the pancakeswap factory (for example SAFEMOON/WBNB), and then start continuosloy checking if liquidity is available on the panacakeswap router. Once liquidity is available the trade function is called. If the liquity check toggle is set to false, the trade function will start right away.
+<b>Selected token price/balance</b>: This function starts automatically when the program starts running, it continually retrieves the price and balance of the selected token and BNB price which is then displayed at the bottom of the interface. The percentage increase is also calculated using the field "tokenstartprice" compared to the current price.
 
+<b>Start/Snipe</b>: If the liquidty check toggle is set to true, a concurrent thread is created...Firstly, the bot will check if the selected pair contract is avaiable on the pancakeswap factory (for example SAFEMOON/WBNB), and then start continuosloy checking if liquidity is available on the panacakeswap router. Once liquidity is available the trade function is called. If the liquity check toggle is set to false, the trade function will start right away.
+
+<b>Stop</b>: This will stop all threads currently running, for example when you start the program and you are waiting for liquidity. If you click stop the thread will be killed. This also includes the price/balance thread which runs in the background. (restart program to begin price/balance thread again)
 
 <H2>Fields</H2>
 
-<b>Selected Token</b>: The dropdwon will be populated from the tokens list set in tokens.json, once selected the token fields will be automatically populated.
-
-The first swap pair token will have to be WBNB, so you will need to make sure the token you are buying has a pair contract with WBNB. for example WBNB/SAFEMOON. This basically means that you are able to swap the selected token for BNB.
+<b>Selected Token</b>: The dropdwon will be populated from the tokens list set in tokens.json, once selected the token fields will be automatically populated. Make sure you have the correct token decimals otherwise this can affect the price/balances and your trades. You can find the decimals by going to https://bscscan.com/ and looking up the token address.
 
 <b>Trade Action</b>: There are 3 trade actions you need to be aware of
 1. BUY - a buy transaction will be created, using the token selected. The trade will consist of trading BNB for the selected token.
@@ -66,6 +60,8 @@ The first swap pair token will have to be WBNB, so you will need to make sure th
 <b>BNB to trade</b>: How many BNB do you wish to use for the transaction.
 
 <b>Token start price</b>: The price used to get the price percentage increase in the price thread which populates the prices/balances at the bottom of the program.
+
+<b>Tokens to trade</b>: The exact amount of tokens you wish to buy.
 
 <b>Token to buy</b>: Instead of using the "BNB to trade" which will get as many tokens as possible, this field will use the exact output and calculate the amount of BNB that will be used in the trade at that given time
 
@@ -103,6 +99,8 @@ The max slippage you want the bot to use when selling. Can be set from 1 to 100%
 accept a trade if the minimal amount of tokens it gets is 0 (=always accepting).
 Slippage is the expected % difference between these quoted and executed prices. Low liquidity can
 also cause increased slippage, which is why larger orders tend to face higher slippage.
+
+<b>Tokens to sell</b>: The exact amount of tokens you wish to sell for BNB.
 
 <b>Amount of seconds to wait until sell</b>
 This field is used for the time between the buy transaction and the sell transaction.
@@ -157,7 +155,7 @@ Once you have the tx you can search your transactions up on 'https://bscscan.com
 <br> </br>
 <H2>To do list</H2>
 
-- Add multiple exchanges to choose from.
+- Add multiple exchanges to choose from. uniswap, sushiswap etc
 - create multiple bots for all blockchains. eth, matic, solana etc
 
 <br> </br>
