@@ -150,7 +150,7 @@ Once you have the tx you can search your transactions up on 'https://bscscan.com
 
 
 <H2>BSC Errors</h2>
-- Fail with error TransferHelper: ‘TRANSFER_FROM_FAILED’ ‘max gas' was too low. Please set the max-gas at 700k to be sure it never fails because of that.
+- Fail with error TransferHelper: ‘TRANSFER_FROM_FAILED’ ‘max gas' was too low. Please set the max-gas at 700k to be sure it never fails.
 
 <br> </br>
 <H2>To do list</H2>
